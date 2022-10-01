@@ -7,7 +7,6 @@ using Termo.Core.Repositories;
 using Termo.Data;
 using Termo.Services;
 using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,11 +15,13 @@ builder.Services.AddDbContext<TermoDbContext>(options =>
 {
     options.UseSqlite(connectionString);
 });
+builder.Services.BuildServiceProvider().GetService<TermoDbContext>().Database.Migrate();
 
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<IMailSender, MailSender>();
 builder.Services.AddTransient<IEmailSender>(e => new EmailSender(builder.Configuration.GetValue<string>("MailSettings:Host"), builder.Configuration.GetValue<int>("MailSettings:Port"), builder.Configuration.GetValue<string>("MailSettings:Mail")));
 builder.Services.AddHttpContextAccessor();
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

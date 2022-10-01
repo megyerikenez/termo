@@ -23,6 +23,7 @@ mono_crash.*
 [Rr]eleases/
 dvpcAPI/
 .config/
+Termo.db*
 x64/
 x86/
 [Aa][Rr][Mm]/

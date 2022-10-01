@@ -1,37 +1,35 @@
-﻿using Microsoft.AspNetCore.Identity.UI.Services;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Termo.Core.Models.Email;
 using Termo.Core.Repositories.Interfaces;
-using Termo.Services;
 
 namespace Termo.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/")]
     [ApiController]
-    public class EmailController : ControllerBase
+    public class DefaultController : ControllerBase
     {
         private readonly IMailSender mailService;
 
-        public EmailController(IMailSender mailService)
+        public DefaultController(IMailSender mailService)
         {
             this.mailService = mailService;
         }
 
         [HttpPost]
-        [Route("Send")]
+        [Route("register")]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<JsonResult> Send(MailDto mailDto)
         {
             try
             {
-                return new JsonResult(new {success = await mailService.SendMessageAsync(mailDto) });
+                return new JsonResult(new { success = await mailService.SendMessageAsync(mailDto) });
             }
             catch (Exception ex)
             {
-                return new JsonResult(new {success = ex.Message});
+                return new JsonResult(new { success = ex.Message });
             }
-
         }
     }
 }

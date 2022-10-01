@@ -6,17 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Termo.Core.Models.Email
+namespace Termo.Core.Models
 {
-    public class MailDto
+    public class BaseDto
     {
         [Required]
-        public string FirstName { get; set; }
-        [Required]
-        public string LastName { get; set; }
-        [Required]
-        [EmailAddress]
-        public string Email { get; set; }
+        public string Token { get; set; }
         [DefaultValue("HU")]
         public string Lang { get; set; } = "HU";
     }
