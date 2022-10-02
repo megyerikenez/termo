@@ -22,6 +22,18 @@ builder.Services.AddScoped<IMailSender, MailSender>();
 builder.Services.AddTransient<IEmailSender>(e => new EmailSender(builder.Configuration.GetValue<string>("MailSettings:Host"), builder.Configuration.GetValue<int>("MailSettings:Port"), builder.Configuration.GetValue<string>("MailSettings:Mail")));
 builder.Services.AddHttpContextAccessor();
 
+builder.Services.AddCors(options =>
+{
+
+    options.AddPolicy("AllowAll",
+        builder =>
+        {
+            builder
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+        });
+});
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
