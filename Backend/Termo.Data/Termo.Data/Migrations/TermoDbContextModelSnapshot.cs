@@ -17,13 +17,57 @@ namespace Termo.Data.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.9");
 
+            modelBuilder.Entity("Termo.Data.Models.BourdonTest", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("EndTime")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("TestId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("charsViewed")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("correctlyIgnored")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("correctlyMarked")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("incorrectlyIgnored")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("incorrectlyMarked")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("linesViewed")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TestId");
+
+                    b.ToTable("BourdonTests");
+                });
+
             modelBuilder.Entity("Termo.Data.Models.ChairLampTest", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("CreatedTime")
+                    b.Property<DateTime>("CreatedDate")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("EndTime")
@@ -59,7 +103,7 @@ namespace Termo.Data.Migrations
                     b.Property<int>("CorrectlyMarked")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("CreatedTime")
+                    b.Property<DateTime>("CreatedDate")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("IncorrectlyIgnored")
@@ -84,7 +128,7 @@ namespace Termo.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("CreatedTime")
+                    b.Property<DateTime>("CreatedDate")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Link")
@@ -108,16 +152,13 @@ namespace Termo.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("ColumnCount")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("CorrectlyIgnored")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("CorrectlyMarked")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("CreatedTime")
+                    b.Property<DateTime>("CreatedDate")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("EndTime")
@@ -127,9 +168,6 @@ namespace Termo.Data.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("IncorrectlyMarked")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("RowCount")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("StartTime")
@@ -152,7 +190,7 @@ namespace Termo.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("CreatedTime")
+                    b.Property<DateTime>("CreatedDate")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Email")
@@ -170,6 +208,17 @@ namespace Termo.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Termo.Data.Models.BourdonTest", b =>
+                {
+                    b.HasOne("Termo.Data.Models.Test", "Test")
+                        .WithMany()
+                        .HasForeignKey("TestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Test");
                 });
 
             modelBuilder.Entity("Termo.Data.Models.ChairLampTest", b =>

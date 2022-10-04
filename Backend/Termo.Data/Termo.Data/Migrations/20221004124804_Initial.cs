@@ -17,7 +17,7 @@ namespace Termo.Data.Migrations
                     FirstName = table.Column<string>(type: "TEXT", nullable: false),
                     LastName = table.Column<string>(type: "TEXT", nullable: false),
                     Email = table.Column<string>(type: "TEXT", nullable: false),
-                    CreatedTime = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    CreatedDate = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -31,7 +31,7 @@ namespace Termo.Data.Migrations
                     Id = table.Column<string>(type: "TEXT", nullable: false),
                     Link = table.Column<string>(type: "TEXT", nullable: false),
                     UserId = table.Column<string>(type: "TEXT", nullable: false),
-                    CreatedTime = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    CreatedDate = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -45,6 +45,33 @@ namespace Termo.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "BourdonTests",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "TEXT", nullable: false),
+                    incorrectlyMarked = table.Column<int>(type: "INTEGER", nullable: false),
+                    incorrectlyIgnored = table.Column<int>(type: "INTEGER", nullable: false),
+                    correctlyMarked = table.Column<int>(type: "INTEGER", nullable: false),
+                    correctlyIgnored = table.Column<int>(type: "INTEGER", nullable: false),
+                    linesViewed = table.Column<int>(type: "INTEGER", nullable: false),
+                    charsViewed = table.Column<int>(type: "INTEGER", nullable: false),
+                    StartTime = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    EndTime = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    TestId = table.Column<string>(type: "TEXT", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BourdonTests", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BourdonTests_Tests_TestId",
+                        column: x => x.TestId,
+                        principalTable: "Tests",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ChairLampTests",
                 columns: table => new
                 {
@@ -52,7 +79,7 @@ namespace Termo.Data.Migrations
                     StartTime = table.Column<DateTime>(type: "TEXT", nullable: false),
                     EndTime = table.Column<DateTime>(type: "TEXT", nullable: false),
                     TestId = table.Column<string>(type: "TEXT", nullable: false),
-                    CreatedTime = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    CreatedDate = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -74,12 +101,10 @@ namespace Termo.Data.Migrations
                     IncorrectlyIgnored = table.Column<int>(type: "INTEGER", nullable: false),
                     CorrectlyMarked = table.Column<int>(type: "INTEGER", nullable: false),
                     CorrectlyIgnored = table.Column<int>(type: "INTEGER", nullable: false),
-                    RowCount = table.Column<int>(type: "INTEGER", nullable: false),
-                    ColumnCount = table.Column<int>(type: "INTEGER", nullable: false),
                     StartTime = table.Column<DateTime>(type: "TEXT", nullable: false),
                     EndTime = table.Column<DateTime>(type: "TEXT", nullable: false),
                     TestId = table.Column<string>(type: "TEXT", nullable: false),
-                    CreatedTime = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    CreatedDate = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -103,7 +128,7 @@ namespace Termo.Data.Migrations
                     CorrectlyIgnored = table.Column<int>(type: "INTEGER", nullable: false),
                     PicturesRevised = table.Column<int>(type: "INTEGER", nullable: false),
                     ChairLampTestId = table.Column<string>(type: "TEXT", nullable: false),
-                    CreatedTime = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    CreatedDate = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -115,6 +140,11 @@ namespace Termo.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BourdonTests_TestId",
+                table: "BourdonTests",
+                column: "TestId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ChairLampTestParts_ChairLampTestId",
@@ -139,6 +169,9 @@ namespace Termo.Data.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "BourdonTests");
+
             migrationBuilder.DropTable(
                 name: "ChairLampTestParts");
 

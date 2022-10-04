@@ -21,7 +21,7 @@ namespace Termo.Data
             {
                 if (entry.State == EntityState.Added)
                 {
-                    entry.Entity.CreatedTime = DateTime.Now;
+                    entry.Entity.CreatedDate = DateTime.Now;
                 }
             }
             return base.SaveChangesAsync(cancellationToken);
@@ -31,5 +31,6 @@ namespace Termo.Data
         public DbSet<ChairLampTest> ChairLampTests { get; set; }
         public DbSet<ChairLampTestPart> ChairLampTestParts { get; set; }
         public DbSet<ToulousePieronTest> ToulousePieronTests { get; set; }
+        public DbSet<BourdonTest> BourdonTests { get; set; }
     }
 }

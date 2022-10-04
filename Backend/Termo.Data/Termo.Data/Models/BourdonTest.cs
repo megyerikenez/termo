@@ -7,12 +7,14 @@ using System.Threading.Tasks;
 
 namespace Termo.Data.Models
 {
-    public class ToulousePieronTest : BaseEntity
+    public class BourdonTest : BaseEntity
     {
-        public int IncorrectlyMarked { get; set; }
-        public int IncorrectlyIgnored { get; set; }
-        public int CorrectlyMarked { get; set; }
-        public int CorrectlyIgnored { get; set; }
+        public int incorrectlyMarked { get; set; }
+        public int incorrectlyIgnored { get; set; }
+        public int correctlyMarked { get; set; }
+        public int correctlyIgnored { get; set; }
+        public int linesViewed { get; set; }
+        public int charsViewed { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
 

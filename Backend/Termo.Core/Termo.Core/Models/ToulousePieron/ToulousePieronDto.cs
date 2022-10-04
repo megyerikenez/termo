@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Termo.Data.Models
+namespace Termo.Core.Models.ToulousePieron
 {
-    public class ToulousePieronTest : BaseEntity
+    public class ToulousePieronDto : BaseDto
     {
         public int IncorrectlyMarked { get; set; }
         public int IncorrectlyIgnored { get; set; }
@@ -15,9 +14,5 @@ namespace Termo.Data.Models
         public int CorrectlyIgnored { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
-
-        [ForeignKey("TestId")]
-        public string TestId { get; set; }
-        public Test Test { get; set; }
     }
 }

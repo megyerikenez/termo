@@ -11,6 +11,6 @@ namespace Termo.Data.Models
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string Id { get; set; }
-        public DateTime CreatedTime { get; set; } = DateTime.Now;
+        public DateTime CreatedDate { get; set; } = DateTime.Now;
     }
 }
