@@ -118,10 +118,11 @@ namespace Termo.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ChairLampTestParts",
+                name: "ChairLampTestItems",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "TEXT", nullable: false),
+                    Minute = table.Column<int>(type: "INTEGER", nullable: false),
                     IncorrectlyIgnored = table.Column<int>(type: "INTEGER", nullable: false),
                     IncorrectlyMarked = table.Column<int>(type: "INTEGER", nullable: false),
                     CorrectlyMarked = table.Column<int>(type: "INTEGER", nullable: false),
@@ -132,9 +133,9 @@ namespace Termo.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ChairLampTestParts", x => x.Id);
+                    table.PrimaryKey("PK_ChairLampTestItems", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ChairLampTestParts_ChairLampTests_ChairLampTestId",
+                        name: "FK_ChairLampTestItems_ChairLampTests_ChairLampTestId",
                         column: x => x.ChairLampTestId,
                         principalTable: "ChairLampTests",
                         principalColumn: "Id",
@@ -147,8 +148,8 @@ namespace Termo.Data.Migrations
                 column: "TestId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ChairLampTestParts_ChairLampTestId",
-                table: "ChairLampTestParts",
+                name: "IX_ChairLampTestItems_ChairLampTestId",
+                table: "ChairLampTestItems",
                 column: "ChairLampTestId");
 
             migrationBuilder.CreateIndex(
@@ -173,7 +174,7 @@ namespace Termo.Data.Migrations
                 name: "BourdonTests");
 
             migrationBuilder.DropTable(
-                name: "ChairLampTestParts");
+                name: "ChairLampTestItems");
 
             migrationBuilder.DropTable(
                 name: "ToulousePieronTests");

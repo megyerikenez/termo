@@ -9,7 +9,7 @@ namespace Termo.Data.Models
 {
     public class ChairLampTest : BaseEntity
     {
-        public virtual IList<ChairLampTestPart> ChairLampTestParts { get; set; }
+        public virtual IList<ChairLampTestItem> ChairLampTestItems { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
 

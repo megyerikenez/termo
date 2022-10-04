@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Termo.Core.Models;
+using Termo.Core.Models.ChairLamp;
 using Termo.Core.Models.Email;
 using Termo.Core.Models.ToulousePieron;
 using Termo.Core.Repositories.Interfaces;
@@ -13,10 +14,13 @@ namespace Termo.Controllers
     public class SubmitTestController : ControllerBase
     {
         private readonly IToulousePieronRepository pieronRepository;
+        private readonly IChairLampRepository chairLampRepository;
 
-        public SubmitTestController(IToulousePieronRepository pieronRepository)
+        public SubmitTestController(IToulousePieronRepository pieronRepository, 
+            IChairLampRepository chairLampRepository)
         {
             this.pieronRepository = pieronRepository;
+            this.chairLampRepository = chairLampRepository;
         }
 
         [HttpPost]
@@ -25,9 +29,13 @@ namespace Termo.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult> chair_lamp(ChairLampTest chairLampTests)
+        public async Task<IActionResult> chair_lamp(ChairLampDto dto)
         {
-            return Ok();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new RequestM { StatusCode = StatusCodes.Status400BadRequest, Message = "ModelState Invalid" });
+            }
+            return await chairLampRepository.Save(dto);
         }
 
         [HttpPost]
@@ -36,13 +44,13 @@ namespace Termo.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult> toulouse_pieron(ToulousePieronDto dto)
+        public async Task<IActionResult> toulouse_pieron(ToulousePieronDto dto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(new RequestM { StatusCode = StatusCodes.Status400BadRequest, Message = "ModelState Invalid" });
             }
-            return Ok(await pieronRepository.Save(dto));
+            return await pieronRepository.Save(dto);
         }
 
         [HttpPost]

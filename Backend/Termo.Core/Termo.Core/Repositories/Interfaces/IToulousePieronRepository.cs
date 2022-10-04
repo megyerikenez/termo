@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +12,7 @@ namespace Termo.Core.Repositories.Interfaces
 {
     public interface IToulousePieronRepository : IGenericRepository<ToulousePieronTest>
     {
-        Task<RequestM> Save(ToulousePieronDto dto);
+        Task<IActionResult> Save(ToulousePieronDto dto);
         Task<bool> IsInValidTest(string Token);
     }
 }

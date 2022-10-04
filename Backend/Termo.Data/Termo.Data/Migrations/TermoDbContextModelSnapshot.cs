@@ -87,7 +87,7 @@ namespace Termo.Data.Migrations
                     b.ToTable("ChairLampTests");
                 });
 
-            modelBuilder.Entity("Termo.Data.Models.ChairLampTestPart", b =>
+            modelBuilder.Entity("Termo.Data.Models.ChairLampTestItem", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
@@ -112,6 +112,9 @@ namespace Termo.Data.Migrations
                     b.Property<int>("IncorrectlyMarked")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("Minute")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("PicturesRevised")
                         .HasColumnType("INTEGER");
 
@@ -119,7 +122,7 @@ namespace Termo.Data.Migrations
 
                     b.HasIndex("ChairLampTestId");
 
-                    b.ToTable("ChairLampTestParts");
+                    b.ToTable("ChairLampTestItems");
                 });
 
             modelBuilder.Entity("Termo.Data.Models.Test", b =>
@@ -232,10 +235,10 @@ namespace Termo.Data.Migrations
                     b.Navigation("Test");
                 });
 
-            modelBuilder.Entity("Termo.Data.Models.ChairLampTestPart", b =>
+            modelBuilder.Entity("Termo.Data.Models.ChairLampTestItem", b =>
                 {
                     b.HasOne("Termo.Data.Models.ChairLampTest", "ChairLampTest")
-                        .WithMany("ChairLampTestParts")
+                        .WithMany("ChairLampTestItems")
                         .HasForeignKey("ChairLampTestId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -267,7 +270,7 @@ namespace Termo.Data.Migrations
 
             modelBuilder.Entity("Termo.Data.Models.ChairLampTest", b =>
                 {
-                    b.Navigation("ChairLampTestParts");
+                    b.Navigation("ChairLampTestItems");
                 });
 #pragma warning restore 612, 618
         }

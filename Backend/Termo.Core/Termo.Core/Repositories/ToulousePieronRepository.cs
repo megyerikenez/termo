@@ -1,11 +1,6 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Termo.Core.Models;
 using Termo.Core.Models.ToulousePieron;
 using Termo.Core.Repositories.Interfaces;
 using Termo.Data;
@@ -23,23 +18,16 @@ namespace Termo.Core.Repositories
             this.context = context;
             this.mapper = mapper;
         }
-        public async Task<RequestM> Save(ToulousePieronDto dto)
+        public async Task<IActionResult> Save(ToulousePieronDto dto)
         {
             #region Check ERRORS
             if (await IsInValidTest(dto.Token))
             {
-                return new RequestM{
-                    StatusCode = 400,
-                    Message = "Invalid Token"
-                };
+                return new NotFoundResult();
             }
             if (!CheckTime(dto))
             {
-                return new RequestM
-                {
-                    StatusCode = 400,
-                    Message = "The time more than 5minutes"
-                };
+                return new BadRequestResult();
             }
             #endregion
             try
@@ -47,19 +35,11 @@ namespace Termo.Core.Repositories
                 var entity = mapper.Map<ToulousePieronTest>(dto);
                 entity.TestId = (await context.Tests.FirstAsync(x => x.Link == dto.Token)).Id;
                 await AddAsync(entity);
-                return new RequestM
-                {
-                    StatusCode = 200,
-                    Message = $"Saved"
-                };
+                return new OkResult();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return new RequestM
-                {
-                    StatusCode = 500,
-                    Message = $"Exception: {ex.Message}"
-                };
+                return new BadRequestResult();
             }
         }
         public async Task<bool> IsInValidTest(string Token)

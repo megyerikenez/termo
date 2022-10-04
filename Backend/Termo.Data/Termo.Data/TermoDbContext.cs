@@ -29,7 +29,7 @@ namespace Termo.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Test> Tests { get; set; }
         public DbSet<ChairLampTest> ChairLampTests { get; set; }
-        public DbSet<ChairLampTestPart> ChairLampTestParts { get; set; }
+        public DbSet<ChairLampTestItem> ChairLampTestItems { get; set; }
         public DbSet<ToulousePieronTest> ToulousePieronTests { get; set; }
         public DbSet<BourdonTest> BourdonTests { get; set; }
     }
