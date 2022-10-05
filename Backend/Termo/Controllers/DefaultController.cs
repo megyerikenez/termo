@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Termo.Core.Models;
 using Termo.Core.Models.Email;
+using Termo.Core.Repositories;
 using Termo.Core.Repositories.Interfaces;
 
 namespace Termo.Controllers
@@ -35,12 +36,29 @@ namespace Termo.Controllers
         }
 
         [HttpPost]
-        [Route("result")]
+        [Route("results")]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<JsonResult> Results(BaseDto dto)
+        public async Task<IActionResult> Results(BaseDto dto)
         {
-            return new JsonResult(new {success = "Készül"});
+            if (await repository.IsValidLink(dto.Token))
+            {
+                return Ok(await repository.MakeResult(dto));
+            }
+            return BadRequest("Invalid Token");
+        }
+
+        [HttpPost]
+        [Route("admin/results")]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> AdminResult(BaseDto dto)
+        {
+            if (await repository.IsValidLink(dto.Token))
+            {
+                return Ok(await repository.MakeResult(dto));
+            }
+            return BadRequest("Invalid Token");
         }
     }
 }
