@@ -29,32 +29,39 @@ namespace Termo.Core.Repositories
             this.mapper = mapper;
         }
 
-        public async Task<IList<BourdonDto>> GetAllBourdonResult(string Link)
+        public async Task<IList<BourdonResult>> GetAllBourdonResult(string Link)
         {
-            IList<BourdonDto> list = new List<BourdonDto>();
+            IList<BourdonResult> list = new List<BourdonResult>();
             (await context.BourdonTests.Where(x => x.Test.Link == Link).ToListAsync()).ForEach(x =>
             {
-                list.Add(mapper.Map<BourdonDto>(x));
+                list.Add(mapper.Map<BourdonResult>(x));
             });
             return list;
         }
 
-        public async Task<IList<ChairLampDto>> GetAllChairLampResult(string Link)
+        public async Task<IList<ChairLampResult>> GetAllChairLampResult(string Link)
         {
-            IList<ChairLampDto> list = new List<ChairLampDto>();
-            (await context.BourdonTests.Where(x => x.Test.Link == Link).ToListAsync()).ForEach(x =>
+            IList<ChairLampResult> list = new List<ChairLampResult>();
+            (await context.ChairLampTests.Where(x => x.Test.Link == Link).ToListAsync()).ForEach(async x =>
             {
-                list.Add(mapper.Map<ChairLampDto>(x));
+                var chairLamp = mapper.Map<ChairLampResult>(x);
+                chairLamp.Values = new List<ChairLampItemDto>();
+                (await context.ChairLampTestItems.Include(x => x.ChairLampTest).Where(x => x.ChairLampTest.Test.Link == Link).ToListAsync()).ForEach(y =>
+                {
+                    var a = mapper.Map<ChairLampItemDto>(y);
+                    chairLamp.Values.Add(a);
+                });
+                list.Add(mapper.Map<ChairLampResult>(chairLamp));
             });
             return list;
         }
 
-        public async Task<IList<ToulousePieronDto>> GetAllPieronResult(string Link)
+        public async Task<IList<ToulousePieronResult>> GetAllPieronResult(string Link)
         {
-            IList<ToulousePieronDto> list = new List<ToulousePieronDto>();
-            (await context.BourdonTests.Where(x => x.Test.Link == Link).ToListAsync()).ForEach(x =>
+            IList<ToulousePieronResult> list = new List<ToulousePieronResult>();
+            (await context.ToulousePieronTests.Where(x => x.Test.Link == Link).ToListAsync()).ForEach(x =>
             {
-                list.Add(mapper.Map<ToulousePieronDto>(x));
+                list.Add(mapper.Map<ToulousePieronResult>(x));
             });
             return list;
         }
@@ -64,13 +71,13 @@ namespace Termo.Core.Repositories
             return await context.Tests.Where(x => x.Link == Link).AnyAsync();
         }
 
-        public async Task<Result> MakeResult(BaseDto dto)
+        public async Task<Result> MakeResult(string Token)
         {
             return new Result
             {
-                ToulousePieronResult = await GetAllPieronResult(dto.Token),
-                ChairLampResult = await GetAllChairLampResult(dto.Token),
-                BourdonResult = await GetAllBourdonResult(dto.Token)
+                ToulousePieronResult = await GetAllPieronResult(Token),
+                ChairLampResult = await GetAllChairLampResult(Token),
+                BourdonResult = await GetAllBourdonResult(Token)
             };
         }
 
@@ -79,16 +86,21 @@ namespace Termo.Core.Repositories
             return mapper.Map<UserDto>((await context.Tests.FirstAsync(x => x.Link == dto.Token)).User);
         }
 
-        public async Task<AdminResults> MakeAdminResult(BaseDto dto)
+        public async Task<IList<AdminResults>> MakeAdminResult()
         {
-            var user = await GetUser(dto);
-            return new AdminResults
+            var result = new List<AdminResults>();
+            foreach (var test in await GetAllAsync())
             {
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Email = user.Email,
-                Results = await MakeResult(dto)
-            };
+                var user = await context.Users.FirstAsync(x => x.Id.Equals(test.UserId));
+                result.Add(new AdminResults
+                {
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Email = user.Email,
+                    Results = await MakeResult(test.Link)
+                });
+            }
+            return result;
         }
     }
 }

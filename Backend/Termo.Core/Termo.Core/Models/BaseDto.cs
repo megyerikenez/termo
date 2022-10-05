@@ -10,7 +10,6 @@ namespace Termo.Core.Models
 {
     public class BaseDto
     {
-        [Required]
         public string Token { get; set; }
         [DefaultValue("HU")]
         public string Lang { get; set; } = "HU";

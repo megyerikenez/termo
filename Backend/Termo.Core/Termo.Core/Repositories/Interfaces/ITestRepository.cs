@@ -16,12 +16,12 @@ namespace Termo.Core.Repositories.Interfaces
 {
     public interface ITestRepository : IGenericRepository<Test>
     {
-        public Task<Result> MakeResult(BaseDto dto);
-        public Task<AdminResults> MakeAdminResult(BaseDto dto);
+        public Task<Result> MakeResult(string Token);
+        public Task<IList<AdminResults>> MakeAdminResult();
         public Task<UserDto> GetUser(BaseDto dto);
         public Task<bool> IsValidLink(string Link);
-        public Task<IList<ToulousePieronDto>> GetAllPieronResult(string Link);
-        public Task<IList<ChairLampDto>> GetAllChairLampResult(string Link);
-        public Task<IList<BourdonDto>> GetAllBourdonResult(string Link);
+        public Task<IList<ToulousePieronResult>> GetAllPieronResult(string Link);
+        public Task<IList<ChairLampResult>> GetAllChairLampResult(string Link);
+        public Task<IList<BourdonResult>> GetAllBourdonResult(string Link);
     }
 }

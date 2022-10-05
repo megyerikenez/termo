@@ -52,8 +52,12 @@ namespace Termo.Core.Repositories
 
         public async Task<bool> IsInValidTest(string Token)
         {
-            return await context.ChairLampTests.Where(x => x.Test.Link == Token).AnyAsync()
-                || await context.Tests.Where(x => x.Link != Token).AnyAsync() || !await context.Tests.AnyAsync();
+            var test = await context.Tests.FirstOrDefaultAsync(x => x.Link == Token);
+            if (test == null)
+            {
+                return true;
+            }
+            return await context.BourdonTests.Where(x => x.TestId == test.Id).AnyAsync();
         }
 
         public bool CheckTime(BourdonDto dto)

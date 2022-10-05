@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using Termo.Core.Models.ToulousePieron;
 using Termo.Core.Repositories.Interfaces;
 using Termo.Data;
@@ -44,8 +45,12 @@ namespace Termo.Core.Repositories
         }
         public async Task<bool> IsInValidTest(string Token)
         {
-            return await context.ToulousePieronTests.Where(x => x.Test.Link == Token).AnyAsync()
-                || await context.Tests.Where(x=>x.Link != Token).AnyAsync() || await context.Tests.CountAsync() == 0;
+            var test = await context.Tests.FirstOrDefaultAsync(x => x.Link == Token);
+            if (test == null)
+            {
+                return true;
+            }
+            return await context.ToulousePieronTests.Where(x => x.TestId == test.Id).AnyAsync();
         }
 
         public bool CheckTime(ToulousePieronDto dto)

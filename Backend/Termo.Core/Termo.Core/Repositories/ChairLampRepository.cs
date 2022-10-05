@@ -35,8 +35,7 @@ namespace Termo.Core.Repositories
             {
                 var entity = mapper.Map<ChairLampTest>(dto);
                 entity.TestId = (await context.Tests.FirstAsync(x => x.Link == dto.Token)).Id;
-                await context.ChairLampTests.AddAsync(entity);
-                await context.SaveChangesAsync();
+                await AddAsync(entity);
 
                 var testId = (await context.ChairLampTests.FirstAsync(x => x.Test.Link == dto.Token)).Id;
 
@@ -63,8 +62,12 @@ namespace Termo.Core.Repositories
         }
         public async Task<bool> IsInValidTest(string Token)
         {
-            return await context.ChairLampTests.Where(x => x.Test.Link == Token).AnyAsync()
-                || await context.Tests.Where(x => x.Link != Token).AnyAsync() || !await context.Tests.AnyAsync();
+            var test = await context.Tests.FirstOrDefaultAsync(x => x.Link == Token);
+            if (test == null)
+            {
+                return true;
+            }
+            return await context.ChairLampTests.Where(x => x.TestId == test.Id).AnyAsync();
         }
         public bool CheckTime(ChairLampDto dto)
         {

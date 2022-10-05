@@ -12,8 +12,8 @@ namespace Termo.Core.Models.Result
 {
     public class Result
     {
-        public IList<ToulousePieronDto> ToulousePieronResult { get; set; }
-        public IList<ChairLampDto> ChairLampResult { get; set; }
-        public IList<BourdonDto> BourdonResult { get; set; }
+        public IList<ToulousePieronResult> ToulousePieronResult { get; set; }
+        public IList<ChairLampResult> ChairLampResult { get; set; }
+        public IList<BourdonResult> BourdonResult { get; set; }
     }
 }

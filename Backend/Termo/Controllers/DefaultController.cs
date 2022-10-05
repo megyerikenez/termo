@@ -43,22 +43,18 @@ namespace Termo.Controllers
         {
             if (await repository.IsValidLink(dto.Token))
             {
-                return Ok(await repository.MakeResult(dto));
+                return Ok(await repository.MakeResult(dto.Token));
             }
             return BadRequest("Invalid Token");
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("admin/results")]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> AdminResult(BaseDto dto)
+        public async Task<IActionResult> AdminResult()
         {
-            if (await repository.IsValidLink(dto.Token))
-            {
-                return Ok(await repository.MakeResult(dto));
-            }
-            return BadRequest("Invalid Token");
+            return Ok(await repository.MakeAdminResult());
         }
     }
 }
