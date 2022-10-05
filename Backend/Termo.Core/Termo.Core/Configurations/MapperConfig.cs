@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Termo.Core.Models.Bourdon;
 using Termo.Core.Models.ChairLamp;
 using Termo.Core.Models.ToulousePieron;
 using Termo.Data.Models;
@@ -13,6 +14,8 @@ namespace Termo.Core.Configurations
 
             CreateMap<ChairLampDto, ChairLampTest>().ReverseMap();
             CreateMap<ChairLampItemDto, ChairLampTestItem>().ReverseMap();
+
+            CreateMap<BourdonDto, BourdonTest>().ReverseMap();
         }
     }
 }

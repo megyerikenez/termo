@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Termo.Core.Models;
+using Termo.Core.Models.Bourdon;
 using Termo.Core.Models.ChairLamp;
 using Termo.Core.Models.Email;
 using Termo.Core.Models.ToulousePieron;
@@ -15,12 +16,14 @@ namespace Termo.Controllers
     {
         private readonly IToulousePieronRepository pieronRepository;
         private readonly IChairLampRepository chairLampRepository;
+        private readonly IBourdonRepository bourdonRepository;
 
         public SubmitTestController(IToulousePieronRepository pieronRepository, 
-            IChairLampRepository chairLampRepository)
+            IChairLampRepository chairLampRepository, IBourdonRepository bourdonRepository)
         {
             this.pieronRepository = pieronRepository;
             this.chairLampRepository = chairLampRepository;
+            this.bourdonRepository = bourdonRepository;
         }
 
         [HttpPost]
@@ -59,9 +62,13 @@ namespace Termo.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult> bourdon(BourdonTest dto)
+        public async Task<IActionResult> bourdon(BourdonDto dto)
         {
-            return Ok();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new RequestM { StatusCode = StatusCodes.Status400BadRequest, Message = "ModelState Invalid" });
+            }
+            return await bourdonRepository.Save(dto);
         }
     }
 }

@@ -21,8 +21,9 @@ builder.Services.AddAutoMapper(typeof(MapperConfig));
 
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<IToulousePieronRepository, ToulousePieronRepository>();
-builder.Services.AddScoped<ITestRepository, TestRepository>();
 builder.Services.AddScoped<IChairLampRepository, ChairLampRepository>();
+builder.Services.AddScoped<IBourdonRepository, BourdonRepository>();
+builder.Services.AddScoped<ITestRepository, TestRepository>();
 builder.Services.AddScoped<IMailSender, MailSender>();
 builder.Services.AddTransient<IEmailSender>(e => new EmailSender(builder.Configuration.GetValue<string>("MailSettings:Host"), builder.Configuration.GetValue<int>("MailSettings:Port"), builder.Configuration.GetValue<string>("MailSettings:Mail")));
 builder.Services.AddHttpContextAccessor();
