@@ -5,9 +5,11 @@ VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Termo", "Termo\Termo.csproj", "{BFD235D3-AB60-4C17-ABBC-9F599CB5897B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Termo.Core", "Termo.Core\Termo.Core\Termo.Core.csproj", "{72AC4A2C-7C4D-485C-9376-EA8B7B2D6D5D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Termo.Core", "Termo.Core\Termo.Core\Termo.Core.csproj", "{72AC4A2C-7C4D-485C-9376-EA8B7B2D6D5D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Termo.Data", "Termo.Data\Termo.Data\Termo.Data.csproj", "{D8A989D8-4563-44ED-81F9-C517349CC31B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Termo.Data", "Termo.Data\Termo.Data\Termo.Data.csproj", "{D8A989D8-4563-44ED-81F9-C517349CC31B}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{E633EE07-35BB-4659-A084-B205573C9259}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{D8A989D8-4563-44ED-81F9-C517349CC31B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D8A989D8-4563-44ED-81F9-C517349CC31B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D8A989D8-4563-44ED-81F9-C517349CC31B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E633EE07-35BB-4659-A084-B205573C9259}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E633EE07-35BB-4659-A084-B205573C9259}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E633EE07-35BB-4659-A084-B205573C9259}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E633EE07-35BB-4659-A084-B205573C9259}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

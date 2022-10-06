@@ -9,11 +9,10 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Termo.Core.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);
-
-var connectionString = builder.Configuration.GetConnectionString("Termo");
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<TermoDbContext>(options =>
 {
-    options.UseSqlite(connectionString);
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 });
 builder.Services.BuildServiceProvider().GetService<TermoDbContext>().Database.Migrate();
 

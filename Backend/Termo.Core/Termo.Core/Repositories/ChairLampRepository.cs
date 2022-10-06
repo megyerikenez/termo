@@ -39,16 +39,16 @@ namespace Termo.Core.Repositories
 
                 var testId = (await context.ChairLampTests.FirstAsync(x => x.Test.Link == dto.Token)).Id;
 
-                for (int i = 0; i < dto.ChairLampParts.Count(); i++)
+                for (int i = 0; i < dto.Values.Count(); i++)
                 {
                     context.ChairLampTestItems.Add(new ChairLampTestItem
                     {
                         Minute = i + 1,
-                        IncorrectlyIgnored = dto.ChairLampParts[i].IncorrectlyIgnored,
-                        IncorrectlyMarked = dto.ChairLampParts[i].IncorrectlyMarked,
-                        CorrectlyMarked = dto.ChairLampParts[i].CorrectlyMarked,
-                        CorrectlyIgnored = dto.ChairLampParts[i].CorrectlyIgnored,
-                        PicturesRevised = dto.ChairLampParts[i].PicturesRevised,
+                        IncorrectlyIgnored = dto.Values[i].IncorrectlyIgnored,
+                        IncorrectlyMarked = dto.Values[i].IncorrectlyMarked,
+                        CorrectlyMarked = dto.Values[i].CorrectlyMarked,
+                        CorrectlyIgnored = dto.Values[i].CorrectlyIgnored,
+                        PicturesRevised = dto.Values[i].PicturesRevised,
                         ChairLampTestId = testId
                     });
                     await context.SaveChangesAsync();

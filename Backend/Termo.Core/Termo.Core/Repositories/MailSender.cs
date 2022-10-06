@@ -39,7 +39,7 @@ namespace Termo.Core.Repositories
             this.httpClient = httpClient;
         }
         public async Task<bool> SendMessageAsync(MailDto model)
-        {   
+        {
             try
             {
                 string link = await GenerateLink();
@@ -78,7 +78,6 @@ namespace Termo.Core.Repositories
                 _logger.LogError($"SendEmailAsync [Failed] {ex.Message}");
                 return false;
             }
-
         }
         private async Task<string> GenerateLink()
         {
